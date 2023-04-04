@@ -40,7 +40,7 @@ def ebsynth_utility_api(_:gr.Blocks, app: FastAPI):
         st3_5_use_mask_ref:bool  = Body(), 
         st3_5_use_mask_org:bool  = Body(), 
         color_matcher_ref_type:int  = Body(),
-        color_matcher_ref_image:Image = Body(), 
+        color_matcher_ref_image:str = Body(), 
         blend_rate:float = Body(), 
         export_type:str = Body(), 
         bg_src:str = Body(),
