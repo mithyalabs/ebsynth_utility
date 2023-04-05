@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Body
 import gradio as gr
 from ebsynth_utility import ebsynth_utility_process
-from custom_script import Script
+from scripts.custom_script import Script
 
 # class ApiHijack(api.Api):
 #     def __init__(self, *args, **kwargs):
@@ -104,14 +104,14 @@ def ebsynth_utility_api(_:gr.Blocks, app: FastAPI):
         inpaint_area:int = Body(1, title="Inpaint Area(Override img2img Inpaint area)"),
         use_depth:bool = Body(True, title="Use Depth Map If exists in /video_key_depth"),
         img2img_repeat_count:int = Body(1, title="Img2Img Repeat Count (Loop Back)", ge=1, le=30),
-        inc_seed:str = Body(1, title="Add N to seed when repeating", ge=1, le=9999999),
+        inc_seed:int = Body(1, title="Add N to seed when repeating", ge=1, le=9999999),
         auto_tag_mode:str = Body("None", title="Auto Tagging"),
         add_tag_to_head:bool = Body(False, title="Add additional prompts to the head"),
         add_tag_replace_underscore:bool = Body(False, title="Replace '_' with ' '(Does not affect the function to add tokens using add_token.txt.)"),
         is_facecrop:bool = Body(False, title="use Face Crop img2img"),
         face_detection_method:str = Body("YuNet", title="Face Detection Method"),
         face_crop_resolution:int = Body(512, title="Face Crop Resolution", ge=128, le=2048),
-        max_crop_size:str = Body(1024, title="Max Crop Size", ge=0, le=2048),
+        max_crop_size:int = Body(1024, title="Max Crop Size", ge=0, le=2048),
         face_denoising_strength:float = Body(0.5, title="Face Denoising Strength", ge=0, le=1),
         face_area_magnification:float = Body(1.5, title="Face Area Magnification", ge=0, le=10),
         enable_face_prompt:bool = Body(False, title="Enable Face Prompt"),
