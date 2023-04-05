@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Body
 import gradio as gr
 from ebsynth_utility import ebsynth_utility_process
+from custom_script import Script
 
 # class ApiHijack(api.Api):
 #     def __init__(self, *args, **kwargs):
@@ -92,6 +93,89 @@ def ebsynth_utility_api(_:gr.Blocks, app: FastAPI):
                     mask_mode,
         )
         return {"success": True, "stage": stage_index, "project_dir": project_dir, "movie_path": original_movie_path}
+
+
+
+    @app.post("/controlnet/ebsynth-utility")
+    async def controlnet_ebsynth_utility(
+        project_dir:str = Body("", title="Project directory"),
+        generation_test:bool = Body(False, title="Generation TEST!!(Ignore Project directory and use the image and mask specified in the main UI)"),
+        mask_mode:str = Body("Normal", title="Mask Mode(Override img2img Mask mode)"),
+        inpaint_area:int = Body(1, title="Inpaint Area(Override img2img Inpaint area)"),
+        use_depth:bool = Body(True, title="Use Depth Map If exists in /video_key_depth"),
+        img2img_repeat_count:int = Body(1, title="Img2Img Repeat Count (Loop Back)", ge=1, le=30),
+        inc_seed:str = Body(1, title="Add N to seed when repeating", ge=1, le=9999999),
+        auto_tag_mode:str = Body("None", title="Auto Tagging"),
+        add_tag_to_head:bool = Body(False, title="Add additional prompts to the head"),
+        add_tag_replace_underscore:bool = Body(False, title="Replace '_' with ' '(Does not affect the function to add tokens using add_token.txt.)"),
+        is_facecrop:bool = Body(False, title="use Face Crop img2img"),
+        face_detection_method:str = Body("YuNet", title="Face Detection Method"),
+        face_crop_resolution:int = Body(512, title="Face Crop Resolution", ge=128, le=2048),
+        max_crop_size:str = Body(1024, title="Max Crop Size", ge=0, le=2048),
+        face_denoising_strength:float = Body(0.5, title="Face Denoising Strength", ge=0, le=1),
+        face_area_magnification:float = Body(1.5, title="Face Area Magnification", ge=0, le=10),
+        enable_face_prompt:bool = Body(False, title="Enable Face Prompt"),
+        face_prompt:str = Body("face close up", title="Face Prompt"),
+        controlnet_weight:float = Body(0.5, title="Control Net Weight", ge=0, le=2),
+        controlnet_weight_for_face:float = Body(0.5, title="Control Net Weight For Face", ge=0, le=2),
+        disable_facecrop_lpbk_last_time:bool = Body(False, title="Disable at the last loopback time"),
+        use_preprocess_img:bool = Body(True, title="Use Preprocess image If exists in /controlnet_preprocess"),
+    ):
+        
+        print({
+            "project_dir": project_dir,
+            "generation_test": generation_test,
+            "mask_mode": mask_mode,
+            "inpaint_area": inpaint_area,
+            "use_depth": use_depth,
+            "img2img_repeat_count": img2img_repeat_count,
+            "inc_seed": inc_seed,
+            "auto_tag_mode": auto_tag_mode,
+            "add_tag_to_head": add_tag_to_head,
+            "add_tag_replace_underscore": add_tag_replace_underscore,
+            "is_facecrop": is_facecrop,
+            "face_detection_method": face_detection_method,
+            "face_crop_resolution": face_crop_resolution,
+            "max_crop_size": max_crop_size,
+            "face_denoising_strength": face_denoising_strength,
+            "face_area_magnification": face_area_magnification,
+            "enable_face_prompt": enable_face_prompt,
+            "face_prompt": face_prompt,
+            "controlnet_weight": controlnet_weight,
+            "controlnet_weight_for_face": controlnet_weight_for_face,
+            "disable_facecrop_lpbk_last_time": disable_facecrop_lpbk_last_time,
+            "use_preprocess_img": use_preprocess_img
+        })
+
+        # TODO:// get model p
+
+        # script = Script()
+        # script.run(
+        #     p,
+        #     project_dir,
+        #     generation_test,
+        #     mask_mode,
+        #     inpaint_area,
+        #     use_depth,
+        #     img2img_repeat_count,
+        #     inc_seed,
+        #     auto_tag_mode,
+        #     add_tag_to_head,
+        #     add_tag_replace_underscore,
+        #     is_facecrop,
+        #     face_detection_method,
+        #     face_crop_resolution,
+        #     max_crop_size,
+        #     face_denoising_strength,
+        #     face_area_magnification,
+        #     enable_face_prompt,
+        #     face_prompt,
+        #     controlnet_weight,
+        #     controlnet_weight_for_face,
+        #     disable_facecrop_lpbk_last_time,
+        #     use_preprocess_img,
+        # )
+
 
 try:
     import modules.script_callbacks as script_callbacks
