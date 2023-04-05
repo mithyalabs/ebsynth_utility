@@ -31,6 +31,40 @@ class debug_string:
         return self.txt
 
 def ebsynth_utility_process(stage_index: int, project_dir:str, original_movie_path:str, frame_width:int, frame_height:int, st1_masking_method_index:int, st1_mask_threshold:float, tb_use_fast_mode:bool, tb_use_jit:bool, clipseg_mask_prompt:str, clipseg_exclude_prompt:str, clipseg_mask_threshold:int, clipseg_mask_blur_size:int, clipseg_mask_blur_size2:int, key_min_gap:int, key_max_gap:int, key_th:float, key_add_last_frame:bool, color_matcher_method:str, st3_5_use_mask:bool, st3_5_use_mask_ref:bool, st3_5_use_mask_org:bool, color_matcher_ref_type:int, color_matcher_ref_image:Image, blend_rate:float, export_type:str, bg_src:str, bg_type:str, mask_blur_size:int, mask_threshold:float, fg_transparency:float, mask_mode:str):
+    print({
+        "stage_index": stage_index,
+        "project_dir": project_dir,
+        "original_movie_path": original_movie_path,
+        "frame_width": frame_width,
+        "frame_height": frame_height,
+        "st1_masking_method_index": st1_masking_method_index,
+        "st1_mask_threshold": st1_mask_threshold,
+        "tb_use_fast_mode": tb_use_fast_mode,
+        "tb_use_jit": tb_use_jit,
+        "clipseg_mask_prompt": clipseg_mask_prompt,
+        "clipseg_exclude_prompt": clipseg_exclude_prompt,
+        "clipseg_mask_threshold": clipseg_mask_threshold,
+        "clipseg_mask_blur_size": clipseg_mask_blur_size,
+        "clipseg_mask_blur_size2": clipseg_mask_blur_size2,
+        "key_min_gap": key_min_gap,
+        "key_max_gap": key_max_gap,
+        "key_th": key_th,
+        "key_add_last_frame": key_add_last_frame,
+        "color_matcher_method": color_matcher_method,
+        "st3_5_use_mask": st3_5_use_mask,
+        "st3_5_use_mask_ref": st3_5_use_mask_ref,
+        "st3_5_use_mask_org": st3_5_use_mask_org,
+        "color_matcher_ref_type": color_matcher_ref_type,
+        "color_matcher_ref_image": color_matcher_ref_image,
+        "blend_rate": blend_rate,
+        "export_type": export_type,
+        "bg_src": bg_src,
+        "bg_type": bg_type,
+        "mask_blur_size": mask_blur_size,
+        "mask_threshold": mask_threshold,
+        "fg_transparency": fg_transparency,
+        "mask_mode": mask_mode    
+    })
     args = locals()
     info = ""
     info = dump_dict(info, args)
