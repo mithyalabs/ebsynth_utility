@@ -178,9 +178,9 @@ In my case, the entire process from 1 to 7 took about 30 minutes.
 
 
 
-#Setup
+## Setup
 
-##Stage 1 (Extract frames and mask)
+#### Stage 1 (Extract frames and mask)
 To extract frames from video at `/home/ubuntu/elephant.mp4`
 ```sh
 curl -X 'POST' \
@@ -224,7 +224,7 @@ curl -X 'POST' \
 ```
 This will put extracted frames at `/home/ubuntu/ebs-out/video-frame/%05d.png` and mask frames at `/home/ubuntu/ebs-out/video-mask/%05d.png`
 
-##Stage 2 (Select Key Frames)
+#### Stage 2 (Select Key Frames)
 ```sh
 curl -X 'POST' \
   'http://192.18.143.57/ebsynth/process' \
@@ -267,11 +267,11 @@ curl -X 'POST' \
 ```
 This will create a folder `/home/ubuntu/ebs-out/video-key/%05d.png` with key frame images
 
-##Stage 3 (Controlnet Image to image)
+#### Stage 3 (Controlnet Image to image)
 TBD
 
 
-##Stage 4 (Upscale)
+#### Stage 4 (Upscale)
 ```sh
 curl -X 'POST' \
   'http://192.18.143.57/sdapi/v1/extra-batch-images' \
@@ -327,13 +327,13 @@ Response
 
 Place these images at `/home/ubuntu/ebs-out/img2img_upscale_key/%05d.png`
 
-##Stage 5, 6 (Ebsynth)
+#### Stage 5, 6 (Ebsynth)
 Run ebsynth for keyframes
 `00001.png`  `00023.png`  `00039.png`  `00057.png`  `00075.png`  `00089.png`  `00122.png`  `00153.png`  `00203.png`  `00253.png`  `00302.png`
 
 ![Ebsynth](https://pub-706bf4a189d94a6b8bfe844e4aaf385a.r2.dev/ebsynth_image.png)
 
-##stage 7 (Crossfading)
+#### stage 7 (Crossfading)
 ```sh
 curl -X 'POST' \
   'http://192.18.143.57/ebsynth/process' \
