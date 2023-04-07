@@ -268,7 +268,98 @@ curl -X 'POST' \
 This will create a folder `/home/ubuntu/ebs-out/video-key/%05d.png` with key frame images
 
 #### Stage 3 (Controlnet Image to image)
-TBD
+```sh
+curl --location 'http://192.18.143.57/controlnet/img2img' \
+--header 'Content-Type: application/json' \
+--data '{
+    "init_images":[
+
+    ],
+    "resize_mode": 0,
+    "denoising_strength": 0.75,
+    "image_cfg_scale": 9,
+    "mask": null,
+    "mask_blur": 4,
+    "inpainting_fill": 0,
+    "inpaint_full_res": true,
+    "inpaint_full_res_padding": 0,
+    "inpainting_mask_invert": 0,
+    "initial_noise_multiplier": 0,
+    "prompt": "green elephants    ",
+    "styles": [],
+    "seed": 5555,
+    "subseed": -1,
+    "subseed_strength": 0,
+    "seed_resize_from_h": -1,
+    "seed_resize_from_w": -1,
+    "sampler_name": "Euler a",
+    "batch_size": 1,
+    "n_iter": 1,
+    "steps": 50,
+    "cfg_scale": 7,
+    "width": 512,
+    "height": 512,
+    "restore_faces": false,
+    "tiling": false,
+    "do_not_save_samples": false,
+    "do_not_save_grid": false,
+    "negative_prompt": "",
+    "eta": 0,
+    "s_churn": 0,
+    "s_tmax": 0,
+    "s_tmin": 0,
+    "s_noise": 1,
+    "override_settings": {},
+    "override_settings_restore_afterwards": true,
+    "script_args": [
+        "--project_dir",
+        "/home/ubuntu/ebs-out",
+        false,
+        "Normal",
+        1,
+        true,
+        1,
+        1,
+        "None",
+        false,
+        false,
+        false,
+        "YuNet",
+        512,
+        1024,
+        0.5,
+        1.5,
+        false,
+        "face close up,",
+        1,
+        0.9,
+        false,
+        true
+    ],
+    "sampler_index": "Euler",
+    "include_init_images": false,
+    "script_name": "ebsynth utility",
+    "send_images": true,
+    "save_images": false,
+    "alwayson_scripts": {},
+    "controlnet_units": [
+        {
+            "module": "canny",
+            "model": "control_sd15_canny [fef5e48e]",
+            "weight": 1,
+            "resize_mode": "Scale to Fit (Inner Fit)",
+            "lowvram": true,
+            "processor_res": 64,
+            "threshold_a": 100,
+            "threshold_b": 200,
+            "guidance": 1,
+            "guidance_start": 0,
+            "guidance_end": 1,
+            "guessmode": true
+        }
+    ]
+}'
+```
 
 
 #### Stage 4 (Upscale)
