@@ -149,11 +149,17 @@ def create_mask_transparent_background(input_dir, output_dir, tb_use_fast_mode, 
     jit_str = " --jit" if tb_use_jit else ""
     bin_path = os.path.join("venv", "Scripts")
     bin_path = os.path.join(bin_path, "transparent-background")
+    
+    print("bin_path", bin_path)
 
     if os.path.isfile(bin_path) or os.path.isfile(bin_path + ".exe"):
+        cmnd = bin_path + " --source " + input_dir + " --dest " + output_dir + " --type map" + fast_str + jit_str
+        print("cmnd:if", cmnd)
         subprocess.call(bin_path + " --source " + input_dir + " --dest " + output_dir + " --type map" + fast_str + jit_str, shell=True)
     else:
-        subprocess.call("transparent-background --source " + input_dir + " --dest " + output_dir + " --type map" + fast_str + jit_str, shell=True)
+        cmnd = "transparent-background --source " + input_dir + " --dest " + output_dir + " --type map" + fast_str + jit_str
+        print("cmnd:else", cmnd)
+        subprocess.call(cmnd, shell=True)
 
     mask_imgs = glob.glob( os.path.join(output_dir, "*.png") )
     
@@ -179,6 +185,11 @@ def ebsynth_utility_stage1(dbg, project_args, frame_width, frame_height, st1_mas
         return
 
     project_dir, original_movie_path, frame_path, frame_mask_path, _, _, _ = project_args
+    
+    print(project_dir)
+    print(original_movie_path)
+    print(frame_path)
+    print(frame_mask_path)
 
     if is_invert_mask:
         if os.path.isdir( frame_path ) and os.path.isdir( frame_mask_path ):
