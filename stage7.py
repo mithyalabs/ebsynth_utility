@@ -209,7 +209,7 @@ def ebsynth_utility_stage7(dbg, project_args, blend_rate,export_type,is_invert_m
         shutil.copy( os.path.join(out_dirs[cur_clip]['path'] , filename) , os.path.join(tmp_dir , filename) )
     
     ### create movie
-    movie_base_name = 'output.mp4'
+    movie_base_name = 'output'
     if is_invert_mask:
         movie_base_name = "inv_" + movie_base_name
     
