@@ -751,6 +751,7 @@ class Script(scripts.Script):
     def run(self, p, project_dir, generation_test, mask_mode, inpaint_area, use_depth, img2img_repeat_count, inc_seed, auto_tag_mode, add_tag_to_head, add_tag_replace_underscore, is_facecrop, face_detection_method, face_crop_resolution, max_crop_size, face_denoising_strength, face_area_magnification, enable_face_prompt, face_prompt, controlnet_weight, controlnet_weight_for_face, disable_facecrop_lpbk_last_time, use_preprocess_img):
         print({
             "p": p,
+            "p.prompt": p.prompt,
             "project_dir": project_dir,
             "generation_test": generation_test,
             "mask_mode": mask_mode,
