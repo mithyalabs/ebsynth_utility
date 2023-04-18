@@ -177,6 +177,23 @@ def ebsynth_utility_api(_:gr.Blocks, app: FastAPI):
         # )
 
 
+    @app.post("/temporal")
+    async def temporal(
+        init_image_path:str = Body("", title="Init image path"),
+        input_images_folder:str = Body("", title="Input images folder"),
+        output_images_folder:str = Body("", title="Output images folder"),
+        options:dict = Body({}, title="Controlnet options")
+    ):
+        print({
+            "init_image_path": init_image_path,
+            "input_images_folder": input_images_folder,
+            "output_images_folder": output_images_folder,
+            "options": options
+        })
+        return temporal(init_image_path, input_images_folder, output_images_folder, options)
+
+
+
 try:
     import modules.script_callbacks as script_callbacks
 
