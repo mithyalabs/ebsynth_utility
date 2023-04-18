@@ -21,6 +21,7 @@ def send_request(last_image_path, current_image_path, options = {}):
     with open(current_image_path, "rb") as b:
         current_image = base64.b64encode(b.read()).decode("utf-8")
 
+    options.init_images = [last_image]
     options.alwayson_scripts.ControlNet.args[0].input_image = current_image
     options.alwayson_scripts.ControlNet.args[1].input_image = last_image
 
