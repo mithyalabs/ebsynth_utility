@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Body
 import gradio as gr
 from ebsynth_utility import ebsynth_utility_process
-from scripts.custom_script import Script
+from scripts.temporalVideo import temporal
 
 # class ApiHijack(api.Api):
 #     def __init__(self, *args, **kwargs):
@@ -178,7 +178,7 @@ def ebsynth_utility_api(_:gr.Blocks, app: FastAPI):
 
 
     @app.post("/temporal")
-    async def temporal(
+    async def temporal_api(
         init_image_path:str = Body("", title="Init image path"),
         input_images_folder:str = Body("", title="Input images folder"),
         output_images_folder:str = Body("", title="Output images folder"),
