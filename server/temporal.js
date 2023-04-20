@@ -29,6 +29,7 @@ const temporal = async (initImagePath, inputFolder, outputFolder, options) => {
     if(!initImagePath || !inputFolder || !outputFolder || !options) {
         throw new Error('Missing arguments');
     }
+    console.log("initImagePath", initImagePath);
     let lastImage = (
         await fs.promises.readFile(initImagePath)
     ).toString('base64'); 
@@ -37,13 +38,14 @@ const temporal = async (initImagePath, inputFolder, outputFolder, options) => {
 
     for (let i = 0; i < inputImageNames.length; i++) {
         const currentImagePath = path.join(inputFolder, inputImageNames[i]);
+        console.log("currentImagePath", currentImagePath);
         const currentImage = (
             await fs.promises.readFile(currentImagePath)
         ).toString('base64');
 
 		lastImage = await temporalRequest(currentImage, lastImage, options);
         await fs.promises.writeFile(
-            path.join(outputFolder, inputFrames[i]),
+            path.join(outputFolder, inputImageNames[i]),
             lastImage,
             'base64'
         );
