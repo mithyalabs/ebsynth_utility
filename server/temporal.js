@@ -3,9 +3,10 @@ const path = require('path');
 const axios = require('axios');
 
 
-const temporalRequest = async (currentImage, lastImage, options) => {
+const temporalRequest = async (currentImage, lastImage, options, mask) => {
     options.script_args = [];
     options.script_name = '';
+    options.mask = mask ? mask : '';
     options.init_images = [lastImage];
     options.alwayson_scripts.ControlNet.args[0].input_image = currentImage;
     options.alwayson_scripts.ControlNet.args[1].input_image = lastImage;
@@ -25,7 +26,7 @@ const temporalRequest = async (currentImage, lastImage, options) => {
 }
 
 
-const temporal = async (initImagePath, inputFolder, outputFolder, options) => {
+const temporal = async (initImagePath, inputFolder, outputFolder, options, maskFolder) => {
     if(!initImagePath || !inputFolder || !outputFolder || !options) {
         throw new Error('Missing arguments');
     }
@@ -43,7 +44,17 @@ const temporal = async (initImagePath, inputFolder, outputFolder, options) => {
             await fs.promises.readFile(currentImagePath)
         ).toString('base64');
 
-		lastImage = await temporalRequest(currentImage, lastImage, options);
+        let maskImagePath, maskImage;
+        if(maskFolder) {
+            maskImagePath = path.join(maskFolder, inputImageNames[i]);
+            console.log("maskImagePath", maskImagePath);
+            maskImage = (
+                await fs.promises.readFile(maskImagePath)
+            ).toString('base64');
+        }
+
+
+		lastImage = await temporalRequest(currentImage, lastImage, options, maskImage);
         await fs.promises.writeFile(
             path.join(outputFolder, inputImageNames[i]),
             lastImage,

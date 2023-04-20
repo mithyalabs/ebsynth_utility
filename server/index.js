@@ -8,10 +8,10 @@ app.use(bodyParser.json());
 
 app.post('/server/temporal', async (req, res, next) => {
     const body = req.body || {};
-    const { initImagePath, inputFolder, outputFolder, options } = body;
-    console.log(initImagePath, inputFolder, outputFolder, options); 
+    const { initImagePath, inputFolder, outputFolder, options, maskFolder } = body;
+    console.log(initImagePath, inputFolder, outputFolder, options, maskFolder); 
     try {
-        await temporal(initImagePath, inputFolder, outputFolder, options);
+        await temporal(initImagePath, inputFolder, outputFolder, options, maskFolder);
     } catch (err) {
         console.log(err);
         next(err);
