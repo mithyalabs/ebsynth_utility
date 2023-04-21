@@ -6,7 +6,7 @@ const axios = require('axios');
 const temporalRequest = async (currentImage, lastImage, options, mask) => {
     options.script_args = [];
     options.script_name = '';
-    options.mask = mask ? mask : '';
+    options.mask = mask ? mask : undefined;
     options.init_images = [lastImage];
     options.alwayson_scripts.ControlNet.args[0].input_image = currentImage;
     options.alwayson_scripts.ControlNet.args[1].input_image = lastImage;
