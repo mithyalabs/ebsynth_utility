@@ -20,8 +20,9 @@ app.post('/server/temporal', async (req, res, next) => {
         await temporal(initImagePath, inputFolder, outputFolder, options, maskFolder);
     } catch (err) {
         console.log(err);
-        next(err);
+        return next(err);
     }
+    return res.send('OK');
 });
 
 app.post('/server/upscale', async (req, res, next) => {
@@ -34,8 +35,9 @@ app.post('/server/upscale', async (req, res, next) => {
         await upscale(inputFolder, outputFolder, options);
     } catch (err) {
         console.log(err);
-        next(err);
+        return next(err);
     }
+    return res.send('OK');
 });
 
 
