@@ -30,7 +30,7 @@ const temporal = async (initImagePath, inputFolder, outputFolder, options, maskF
     if(!initImagePath || !inputFolder || !outputFolder || !options) {
         throw new Error('Missing arguments');
     }
-    console.log("initImagePath", initImagePath);
+    
     let lastImage = (
         await fs.promises.readFile(initImagePath)
     ).toString('base64'); 
