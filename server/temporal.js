@@ -35,8 +35,10 @@ const temporal = async (initImagePath, inputFolder, outputFolder, options, maskF
         await fs.promises.readFile(initImagePath)
     ).toString('base64'); 
 
-    const inputImageNames = await fs.promises.readdir(inputFolder);
+    const inputImageNames = (await fs.promises.readdir(inputFolder)).filter((name) => name.endsWith('.png'));
 
+    await fs.promises.mkdir(outputFolder, { recursive: true });
+    
     for (let i = 0; i < inputImageNames.length; i++) {
         const currentImagePath = path.join(inputFolder, inputImageNames[i]);
         console.log("currentImagePath", currentImagePath);

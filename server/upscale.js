@@ -7,12 +7,12 @@ const upscale = async (inputFolder, outputFolder, options) => {
     if(!inputFolder || !outputFolder || !options) {
         throw new Error('Missing arguments');
     }
-
-
-    const inputImageNames = await fs.promises.readdir(inputFolder);
+    const inputImageNames = (await fs.promises.readdir(inputFolder)).filter((name) => name.endsWith('.png'));;
+    await fs.promises.mkdir(outputFolder, { recursive: true });
 
     for(let imageName of inputImageNames) {
         const imagePath = path.join(inputFolder, imageName);
+        console.log(`Upscaling ${imagePath}`);
         let image = (
             await fs.promises.readFile(imagePath)
         ).toString('base64'); 
