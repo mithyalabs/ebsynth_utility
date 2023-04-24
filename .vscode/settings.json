@@ -8,6 +8,11 @@
         "gradio",
         "inpaint",
         "inpainting",
-        "temporalnet"
-    ]
+        "temporalnet",
+        "Upscaling"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }
