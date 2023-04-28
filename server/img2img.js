@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const fs = require('fs');
+const axios = require('axios');
 
 const img2img = async (inputImagePath, outputImagePath, options, maskImagePath) => {
 
