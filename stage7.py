@@ -15,7 +15,7 @@ def clamp(n, smallest, largest):
 def create_movie_from_frames( dir, start, end, number_of_digits, fps, output_path, export_type):
     def get_export_str(export_type):
         if export_type == "mp4":
-            return " -vcodec libx264 -pix_fmt yuv420p "
+            return " -vcodec libx265 -crf 18 -pix_fmt yuv420p "
         elif export_type == "webm":
 #            return " -vcodec vp9 -crf 10 -b:v 0 "
             return " -crf 40 -b:v 0 -threads 4 "
