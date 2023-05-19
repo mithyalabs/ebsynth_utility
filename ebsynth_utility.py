@@ -64,7 +64,7 @@ def ebsynth_utility_process(stage_index: int, project_dir:str, original_movie_pa
         "mask_threshold": mask_threshold,
         "fg_transparency": fg_transparency,
         "mask_mode": mask_mode    
-    })
+    }, flush = True)
     args = locals()
     info = ""
     info = dump_dict(info, args)
