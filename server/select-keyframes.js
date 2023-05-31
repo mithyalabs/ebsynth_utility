@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-const selectKeyframes = async (projectDir, desiredFrames, mask_mode) => {
+const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
 
-    const keyframesDir = path.join(projectDir, mask_mode === 'Invert' ? 'inv':'', 'video_key');
+    const keyframesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_key');
     const options = {
         stage_index: 2,
         project_dir: projectDir,
@@ -12,7 +12,7 @@ const selectKeyframes = async (projectDir, desiredFrames, mask_mode) => {
         key_min_gap: 2,
         key_max_gap: 300,
         key_add_last_frame: false,
-        mask_mode
+        mask_mode: maskMode
     }
     let low_key_th = 0;
     let hig_key_th = 100;

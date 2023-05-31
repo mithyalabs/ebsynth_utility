@@ -59,12 +59,12 @@ app.post('/server/img2img', async (req, res, next) => {
 });
 app.post('/server/select-keyframes', async (req, res, next) => {
     const body = req.body || {};
-    const { projectDir, desiredFrames, mask_mode } = body;
+    const { projectDir, desiredFrames, maskMode } = body;
     console.log("selectKeyframes:projectDir", projectDir); 
     console.log("selectKeyframes:desiredFrames", desiredFrames); 
-    console.log("selectKeyframes:mask_mode", mask_mode);
+    console.log("selectKeyframes:maskMode", maskMode);
     try {
-       const resp = await selectKeyframes(projectDir, desiredFrames, mask_mode);
+       const resp = await selectKeyframes(projectDir, desiredFrames, maskMode);
        return resp.send(resp)
     } catch (err) {
         console.log(err);
