@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { temporal } = require('./temporal');
 const { upscale } = require('./upscale');
 const { img2img } = require('./img2img');
+const { selectKeyframes } = require('./select-keyframes');
 const app = express();
 const port = 3000;
 
@@ -55,6 +56,20 @@ app.post('/server/img2img', async (req, res, next) => {
         return next(err);
     }
     return res.send('OK');
+});
+app.post('/server/select-keyframes', async (req, res, next) => {
+    const body = req.body || {};
+    const { projectDir, desiredFrames, mask_mode } = body;
+    console.log("selectKeyframes:projectDir", projectDir); 
+    console.log("selectKeyframes:desiredFrames", desiredFrames); 
+    console.log("selectKeyframes:mask_mode", mask_mode);
+    try {
+       const resp = await selectKeyframes(projectDir, desiredFrames, mask_mode);
+       return resp.send(resp)
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
 });
 
 
