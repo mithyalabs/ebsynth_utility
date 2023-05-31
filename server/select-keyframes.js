@@ -15,11 +15,11 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
         mask_mode: maskMode
     }
     let low_key_th = 0;
-    let hig_key_th = 100;
+    let high_key_th = 100;
     let keyframes = [];
     let iter = 0
     do {
-        options.key_th = low_key_th + (hig_key_th - low_key_th) / 2;
+        options.key_th = low_key_th + (high_key_th - low_key_th) / 2;
         console.log(`applying key_th: ${options.key_th}`)
         await axios.post(
             'http://localhost:7860/ebsynth/process',
@@ -34,10 +34,10 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
             low_key_th = options.key_th;
         }
         else {
-            hig_key_th = options.key_th;
+            high_key_th = options.key_th;
         }
         iter++;
-    } while (hig_key_th > low_key_th && keyframes.length !== desiredFrames && iter < 20)
+    } while (high_key_th > low_key_th && keyframes.length !== desiredFrames && iter < 20)
 
     return { keyframes, options };
 }
