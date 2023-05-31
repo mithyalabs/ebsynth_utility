@@ -6,7 +6,7 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
 
     const keyframesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_key');
     const options = {
-        stage_index: 2,
+        stage_index: 1,
         project_dir: projectDir,
         original_movie_path: projectDir + "/preprocessed-video.mp4",
         key_min_gap: 2,

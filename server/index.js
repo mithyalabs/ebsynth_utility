@@ -65,7 +65,7 @@ app.post('/server/select-keyframes', async (req, res, next) => {
     console.log("selectKeyframes:maskMode", maskMode);
     try {
        const resp = await selectKeyframes(projectDir, desiredFrames, maskMode);
-       return resp.send(resp)
+       return res.send(resp)
     } catch (err) {
         console.log(err);
         return next(err);
