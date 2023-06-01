@@ -45,7 +45,7 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
             high_key_th = options.key_th;
         }
         iter++;
-    } while (high_key_th > low_key_th && keyframes.length !== desiredFrames && iter < 20)
+    } while (iter < 12 || keyframes.length < desiredFrames)
 
     if(keyframes.length < desiredFrames) {
         for(let frame of extraFrames) {
