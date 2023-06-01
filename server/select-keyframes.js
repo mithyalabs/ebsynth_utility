@@ -5,7 +5,7 @@ const axios = require('axios');
 const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
 
     const keyFramesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_key');
-    const videoFramesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_frame');
+    const videoFramesDir = path.join(projectDir, 'video_frame');
     
     const totalFrames = (await fs.promises.readdir(videoFramesDir))
         .filter(fileName => fileName.endsWith('.png')).length;
