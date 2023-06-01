@@ -4,7 +4,9 @@ const axios = require('axios');
 
 const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
 
-    const keyframesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_key');
+    const keyFramesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_key');
+    const videoFramesDir = path.join(projectDir, maskMode === 'Invert' ? 'inv':'', 'video_frame');
+
     const options = {
         stage_index: 1,
         project_dir: projectDir,
@@ -17,6 +19,7 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
     let low_key_th = 0;
     let high_key_th = 100;
     let keyframes = [];
+    let extraFrames = [];
     let iter = 0
     do {
         options.key_th = low_key_th + (high_key_th - low_key_th) / 2;
@@ -25,9 +28,14 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
             'http://localhost:7860/ebsynth/process',
             options
         );
-        keyframes = (await fs.promises.readdir(keyframesDir))
-        .filter(fileName => fileName.endsWith('.png')).map(k => parseInt(k));
+        keyframes = (await fs.promises.readdir(keyFramesDir))
+        .filter(fileName => fileName.endsWith('.png'));
 
+        console.log(`got ${keyframes.length} frames`);
+
+        if(keyframes.length > desiredFrames) {
+            extraFrames = [...keyframes];
+        }
         if(keyframes.length === desiredFrames) break;
 
         if (keyframes.length > desiredFrames) {
@@ -39,6 +47,21 @@ const selectKeyframes = async (projectDir, desiredFrames, maskMode) => {
         iter++;
     } while (high_key_th > low_key_th && keyframes.length !== desiredFrames && iter < 20)
 
+    if(keyframes.length < desiredFrames) {
+        for(let frame of extraFrames) {
+            if(!keyframes.includes(frame)) {
+                console.log(`Adding frame ${frame}`);
+                await fs.promises.copyFile(
+                    path.join(videoFramesDir, frame),
+                    path.join(keyFramesDir, frame)
+                );
+                keyframes.push(frame);
+                break;
+            }
+        }
+    }
+    keyframes = keyframes.map(k => parseInt(k));
+    keyframes.sort();
     return { keyframes, options };
 }
 
