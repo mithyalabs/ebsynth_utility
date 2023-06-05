@@ -804,10 +804,7 @@ class Script(scripts.Script):
         
         if (type(p) is object or hasattr(p, '__dict__') or "dict" in str(type(p))):
             if(hasattr(p, '__dict__')):
-                if(hasattr(p.__dict__, 'copy')):
-                    d = p.__dict__.copy()
-                else:
-                    d = p.__dict__
+                d = p.__dict__.copy()
             else:
                 d = p
             for i in d:
