@@ -848,10 +848,11 @@ class Script(scripts.Script):
             "controlnet_weight_for_face": controlnet_weight_for_face,
             "disable_facecrop_lpbk_last_time": disable_facecrop_lpbk_last_time,
             "use_preprocess_img": use_preprocess_img,
-            "p": self.get_nested_dict(p.__dict__.copy())
+            # "p": self.get_nested_dict(p.__dict__.copy())
         }
 
         
+        print(p.__dict__.copy(), flush=True)
         print(json.dumps(j_data), flush=True)
 
         args = locals()
