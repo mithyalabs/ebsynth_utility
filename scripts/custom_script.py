@@ -788,7 +788,38 @@ class Script(scripts.Script):
         if input_img_is_preprocessed:
             p.control_net_module = "none"
         return process_images(p)
-
+    
+    def get_nested_dict(self, a, depth = 3):
+        if (depth <= 0): return str(a)
+        if (type(a) is tuple):
+            p = list(a)
+        else:
+            p = a
+        
+        if(not p):
+            return p
+        
+        if(type(p) is str or type(p) is float or type(p) is int or type(p) is bool):
+            return p
+        
+        if (type(p) is object or hasattr(p, '__dict__') or "dict" in str(type(p))):
+            if(hasattr(p, '__dict__')):
+                if(hasattr(p.__dict__, 'copy')):
+                    d = p.__dict__.copy()
+                else:
+                    d = p.__dict__
+            else:
+                d = p
+            for i in d:
+                d[i] = self.get_nested_dict(d[i], depth-1)
+            return d
+        elif (hasattr(p, "__len__")):
+            d = []
+            for i in range(len(p)):
+                d.append(self.get_nested_dict(p[i], depth-1))
+            return d
+        return p
+ 
 # This is where the additional processing is implemented. The parameters include
 # self, the model object "p" (a StableDiffusionProcessing class, see
 # processing.py), and the parameters returned by the ui method.
@@ -797,7 +828,7 @@ class Script(scripts.Script):
 # what is returned by the process_images method.
     def run(self, p, project_dir, generation_test, mask_mode, inpaint_area, use_depth, img2img_repeat_count, inc_seed, auto_tag_mode, add_tag_to_head, add_tag_replace_underscore, is_facecrop, face_detection_method, face_crop_resolution, max_crop_size, face_denoising_strength, face_area_magnification, enable_face_prompt, face_prompt, controlnet_weight, controlnet_weight_for_face, disable_facecrop_lpbk_last_time, use_preprocess_img):
         
-        j_data = json.dumps({
+        j_data = {
             "project_dir": project_dir,
             "generation_test": generation_test,
             "mask_mode": mask_mode,
@@ -819,11 +850,12 @@ class Script(scripts.Script):
             "controlnet_weight": controlnet_weight,
             "controlnet_weight_for_face": controlnet_weight_for_face,
             "disable_facecrop_lpbk_last_time": disable_facecrop_lpbk_last_time,
-            "use_preprocess_img": use_preprocess_img
-        })
+            "use_preprocess_img": use_preprocess_img,
+            "p": self.get_nested_dict(p.__dict__.copy())
+        }
 
-        print(p.__dict__)
-        print(j_data)
+        
+        print(json.dumps(j_data), flush=True)
 
         args = locals()
 
